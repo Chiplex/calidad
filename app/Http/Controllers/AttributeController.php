@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Attribute;
 
 class AttributeController extends Controller
 {
@@ -13,7 +14,9 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        return "Este debe no deberia ingresar";
+        $attributes = Attribute::all();
+
+        return view('attribute.index', compact('attributes'));
     }
 
     /**
@@ -23,7 +26,7 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        //
+        return view('attribute.create');
     }
 
     /**
@@ -34,7 +37,14 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attribute = new Attribute;
+
+        $attribute->name = $request->input('name');
+        $attribute->description = $request->input('description');
+
+        $attribute->save();
+
+        return redirect()->route('attribute.index');
     }
 
     /**

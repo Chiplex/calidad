@@ -72,9 +72,7 @@ Route::resource('valor', 'ValueController')->only([
     'index', 'show'
 ]);
 
-Route::resource('atributos', 'AttributeController')->except([
-    'index', 'show'
-]);
+Route::resource('attribute', 'AttributeController');
 
 Route::resource('nivel', 'LevelController')->names([
     'create' => 'nivel.nuevo',
