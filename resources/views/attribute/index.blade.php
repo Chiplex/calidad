@@ -1,6 +1,6 @@
-<html>
-<body>
-    <table border="">
+@extends('layouts.admin')
+@section('content')
+<table class="table">
         <tr>
             <td>#</td>
             <td>Nombre</td>
@@ -18,5 +18,6 @@
         </tr>
         @endforeach
     </table>
-</body>
-</html>
+@endsection
+
+    

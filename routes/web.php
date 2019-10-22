@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.admin');
 });
 
 Route::get('peticion1/{var}', function ($var){
@@ -74,10 +74,7 @@ Route::resource('valor', 'ValueController')->only([
 
 Route::resource('attribute', 'AttributeController');
 
-Route::resource('nivel', 'LevelController')->names([
-    'create' => 'nivel.nuevo',
-    'edit' => 'nivel.cambiar'
-]);
+Route::resource('level', 'LevelController');
 
 Route::get('redirigir/{nivel}', function ($nivel) {
     return redirect()->route('nivel.cambiar', ['nivel' => $nivel]);

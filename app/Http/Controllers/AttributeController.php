@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Attribute;
+use App\Models\Attribute;
 
 class AttributeController extends Controller
 {
@@ -15,7 +15,7 @@ class AttributeController extends Controller
     public function index()
     {
         $attributes = Attribute::all();
-
+        
         return view('attribute.index', compact('attributes'));
     }
 
