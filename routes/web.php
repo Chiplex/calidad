@@ -87,3 +87,7 @@ Route::get('viajar/{name}/edit', 'VoyagerController@edit');
 Route::get('visitar', 'VoyagerController@visitar');
 
 Route::get('recorrer', 'VoyagerController@recorrer');
+
+Route::post('level/search', 'LevelController@search');
+
+Route::resource('quality', 'QualityController');

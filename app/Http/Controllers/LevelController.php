@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Level;
 
 class LevelController extends Controller
 {
@@ -13,7 +14,8 @@ class LevelController extends Controller
      */
     public function index()
     {
-        return view('level.index');
+        $levels = Level::all();
+        return view('level.index', compact('levels'));
     }
 
     /**
@@ -22,8 +24,16 @@ class LevelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    {   
+        return view('level.create');
+    }
+
+    public function search(Request $request)
     {
-        //
+        $level = Level::firstOrNew(['positions' => $request->search], $request->all());
+        $level->save();
+
+        return view('level.search', compact('level'));
     }
 
     /**
@@ -34,7 +44,11 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $level = new Level;
+        $level->positions = $request->positions;
+        $level->save();
+
+        return redirect()->route('level.index');
     }
 
     /**
@@ -43,9 +57,9 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Level $level)
     {
-        //
+        return view('level.show', compact('level'));
     }
 
     /**

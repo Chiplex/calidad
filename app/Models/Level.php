@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class Level extends Model
 {
+    protected $table = 'level';
+
     protected $fillable = [
-        'name',
-        'description'
+        'positions'
     ];
 }

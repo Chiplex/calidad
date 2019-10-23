@@ -19,6 +19,12 @@ class AttributeController extends Controller
         return view('attribute.index', compact('attributes'));
     }
 
+    public function search(Request $request)
+    {
+        
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,13 +43,7 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        $attribute = new Attribute;
-
-        $attribute->name = $request->input('name');
-        $attribute->description = $request->input('description');
-
-        $attribute->save();
-
+        Attribute::create($request->all());
         return redirect()->route('attribute.index');
     }
 
@@ -55,7 +55,9 @@ class AttributeController extends Controller
      */
     public function show($id)
     {
-        //
+        $attribute = Attribute::findOrFail($id);
+
+        return view('attribute.show', compact('attribute'));
     }
 
     /**

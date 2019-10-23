@@ -13,7 +13,7 @@ class QualityController extends Controller
      */
     public function index()
     {
-        return "Estoy en el index de calidad";
+        return view('quality.index');
     }
 
     /**
@@ -24,6 +24,14 @@ class QualityController extends Controller
     public function create()
     {
         return "Voy a crear una calidad";
+    }
+
+    public function search(Request $request)
+    {
+        $quality = Quality::firstOrNew(['positions' => $request->search], $request->all());
+        $quality->save();
+
+        return view('level.search', compact('quality'));
     }
 
     /**
