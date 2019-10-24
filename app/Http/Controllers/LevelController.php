@@ -30,9 +30,7 @@ class LevelController extends Controller
 
     public function search(Request $request)
     {
-        $level = Level::firstOrNew(['positions' => $request->search], $request->all());
-        $level->save();
-
+        $level = Level::firstOrCreate(['positions' => $request->search], $request->all());
         return view('level.search', compact('level'));
     }
 
@@ -68,9 +66,9 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Level $level)
     {
-        //
+        return view('level.edit', compact('level'));
     }
 
     /**
@@ -80,19 +78,21 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Level $level)
     {
-        //
+        $level->update($request->all());
+        return redirect()->route('level.index');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Level $level)
     {
-        //
+        $level->delete();
+        return redirect()->route('level.index');
     }
 }

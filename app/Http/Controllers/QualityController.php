@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Quality;
 
 class QualityController extends Controller
 {
@@ -13,7 +14,8 @@ class QualityController extends Controller
      */
     public function index()
     {
-        return view('quality.index');
+        $qualitys = Quality::withTrashed()->get();
+        return view('quality.index', compact('qualitys'));
     }
 
     /**
@@ -23,7 +25,7 @@ class QualityController extends Controller
      */
     public function create()
     {
-        return "Voy a crear una calidad";
+        return view('quality.create');
     }
 
     public function search(Request $request)
@@ -42,7 +44,9 @@ class QualityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Quality::create($request->all());
+        
+        return redirect()->route('quality.index');
     }
 
     /**
@@ -62,9 +66,9 @@ class QualityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Quality $quality)
     {
-        return "Voy a editar una calidad nro: ".$id;        
+        return view('quality.edit', compact('quality'));
     }
 
     /**
@@ -74,9 +78,10 @@ class QualityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Quality $quality)
     {
-        //
+        $quality->update($request->all());
+        return redirect()->route('quality.index');
     }
 
     /**
@@ -85,8 +90,23 @@ class QualityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Quality $quality)
     {
-        //
+        $quality->delete();
+        return redirect()->route('quality.index');
+    }
+    
+    public function restore(Request $request)
+    {
+        $quality = Quality::withTrashed()->where(['id' => $request->quality])->first();        
+        $quality->restore();
+        return redirect()->route('quality.index');
+    }
+
+    public function forceDelete(Request $request)
+    {
+        $quality = Quality::withTrashed()->where(['id' => $request->quality])->first();        
+        $quality->forceDelete();
+        return redirect()->route('quality.index');
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Attribute;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class AttributeController extends Controller
 {
@@ -15,14 +16,7 @@ class AttributeController extends Controller
     public function index()
     {
         $attributes = Attribute::all();
-        
         return view('attribute.index', compact('attributes'));
-    }
-
-    public function search(Request $request)
-    {
-        
-
     }
 
     /**
@@ -43,8 +37,11 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $foto = $request->foto;
+        $foto->store('images');
         Attribute::create($request->all());
-        return redirect()->route('attribute.index');
+        return redirect()->route('attribute.index')->with('success', 'Elemento agregado correctamente');
     }
 
     /**
@@ -66,9 +63,9 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Attribute $attribute)
     {
-        return "Esta si esta disponible";
+        return view('attribute.edit', compact('attribute'));
     }
 
     /**
@@ -78,9 +75,13 @@ class AttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Attribute $attribute)
     {
-        //
+        $attribute->name = $request->name;
+        $attribute->description = $request->description;
+        $attribute->save();
+
+        return redirect()->route('attribute.index');
     }
 
     /**
@@ -91,6 +92,9 @@ class AttributeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $attribute = Attribute::find($id);
+        $attribute->delete();
+
+        return back()->with('success', 'Elemento eliminado correctamente');
     }
 }

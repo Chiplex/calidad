@@ -66,16 +66,6 @@ Route::get('transportar/{vehiculo?}', 'VoyagerController@transportar');
 
 Route::get('valuations', 'ValuationsController');
 
-Route::resource('calidad','QualityController');
-
-Route::resource('valor', 'ValueController')->only([
-    'index', 'show'
-]);
-
-Route::resource('attribute', 'AttributeController');
-
-Route::resource('level', 'LevelController');
-
 Route::get('redirigir/{nivel}', function ($nivel) {
     return redirect()->route('nivel.cambiar', ['nivel' => $nivel]);
 });
@@ -88,6 +78,16 @@ Route::get('visitar', 'VoyagerController@visitar');
 
 Route::get('recorrer', 'VoyagerController@recorrer');
 
-Route::post('level/search', 'LevelController@search');
 
 Route::resource('quality', 'QualityController');
+Route::patch('quality/{quality}/restore', 'QualityController@restore');
+Route::post('quality/{quality}/destroy', 'QualityController@forceDelete');
+
+Route::resource('attribute', 'AttributeController');
+
+Route::resource('level', 'LevelController');
+Route::post('level/search', 'LevelController@search');
+    
+
+Route::resource('Valuations', 'ValuationsController');
+
