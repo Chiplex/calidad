@@ -4,7 +4,7 @@
     @component('layouts.components.page-header-title')
         Calidad
         @slot('help') Calidad son referente a la forma final de la trasportación @endslot
-        @slot('icon') ik ik-check-circle bg-blue @endslot
+        @slot('icon') ik ik-check bg-blue @endslot
     @endcomponent
 @endsection
 

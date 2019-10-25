@@ -42,6 +42,15 @@ class VoyagerController extends Controller
         return view('voyager.create');
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'type' => 'required',
+            'linea' => 'required'
+        ]);
+    }
+
     public function edit($name)
     {
         return view('voyager.edit', ['data' => $name]);

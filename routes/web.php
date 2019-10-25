@@ -86,8 +86,24 @@ Route::post('quality/{quality}/destroy', 'QualityController@forceDelete');
 Route::resource('attribute', 'AttributeController');
 
 Route::resource('level', 'LevelController');
-Route::post('level/search', 'LevelController@search');
+Route::get('level/search', 'LevelController@search');
     
 
-Route::resource('Valuations', 'ValuationsController');
+Route::resource('valuations', 'ValuationsController');
 
+Route::resource('value', 'ValueController');
+
+Route::get('author/{author}', function ($author) {
+    
+});
+
+Route::get('author', 'AuthorController@index');
+Route::get('author/{author}', 'AuthorController@show');
+Route::get('author/create', 'AuthorController@create');
+Route::post('author', 'AuthorController@store');
+Route::get('author/{author}/edit', 'AuthorController@edit');
+Route::put('author/{author}', 'AuthorController@update');
+Route::patch('author/{author}', 'AuthorController@update');
+Route::delete('author/{author}', 'AuthorController@delete');
+
+Route::get('bliblioteca/author/{author}', 'AuthorController@show');

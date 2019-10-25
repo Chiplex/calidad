@@ -4,7 +4,7 @@
     @component('layouts.components.page-header-title')
         Calidad
         @slot('help') Agrega un refente final de Calidad @endslot
-        @slot('icon') ik ik-check-circle bg-blue @endslot
+        @slot('icon') ik ik-check bg-blue @endslot
     @endcomponent
 @endsection
 

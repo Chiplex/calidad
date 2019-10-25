@@ -37,9 +37,6 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $foto = $request->foto;
-        $foto->store('images');
         Attribute::create($request->all());
         return redirect()->route('attribute.index')->with('success', 'Elemento agregado correctamente');
     }
@@ -53,7 +50,6 @@ class AttributeController extends Controller
     public function show($id)
     {
         $attribute = Attribute::findOrFail($id);
-
         return view('attribute.show', compact('attribute'));
     }
 

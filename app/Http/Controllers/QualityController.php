@@ -45,7 +45,6 @@ class QualityController extends Controller
     public function store(Request $request)
     {
         Quality::create($request->all());
-        
         return redirect()->route('quality.index');
     }
 
@@ -98,14 +97,18 @@ class QualityController extends Controller
     
     public function restore(Request $request)
     {
-        $quality = Quality::withTrashed()->where(['id' => $request->quality])->first();        
+        $quality = Quality::withTrashed()
+            ->where(['id' => $request->quality])
+            ->first();        
         $quality->restore();
         return redirect()->route('quality.index');
     }
 
     public function forceDelete(Request $request)
     {
-        $quality = Quality::withTrashed()->where(['id' => $request->quality])->first();        
+        $quality = Quality::withTrashed()
+            ->where(['id' => $request->quality])
+            ->first();        
         $quality->forceDelete();
         return redirect()->route('quality.index');
     }

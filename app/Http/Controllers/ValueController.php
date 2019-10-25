@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
+use App\Models\Value;
+use App\Models\Attribute;
+use App\Http\Requests\StoreValueRequest;
 use Illuminate\Http\Request;
 
 class ValueController extends Controller
@@ -13,7 +17,8 @@ class ValueController extends Controller
      */
     public function index()
     {
-        return "entraste a index desde el controlador ValueController";
+        $values = Value::all();
+        return view('value.index', compact('values'));
     }
     
     /**
@@ -23,7 +28,9 @@ class ValueController extends Controller
      */
     public function create()
     {
-        //
+        $attributes = Attribute::all();
+        $levels = Level::all();
+        return view('value.create', compact('attributes', 'levels'));
     }
     
     /**
@@ -32,9 +39,10 @@ class ValueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreValueRequest $request)
     {
-        
+        Value::create($request->validated());
+        return redirect()->route('value.index');
     }
     
     /**
