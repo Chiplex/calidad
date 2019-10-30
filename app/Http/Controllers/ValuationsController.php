@@ -24,7 +24,7 @@ class ValuationsController extends Controller
      */
     public function index()
     {
-        
+        return view('valuations.index');
     }
     
     /**

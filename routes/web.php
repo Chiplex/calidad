@@ -15,95 +15,40 @@ Route::get('/', function () {
     return view('layouts.admin');
 });
 
-Route::get('peticion1/{var}', function ($var){
-    return 'Hola mundo';
-});
-
-Route::get('peticion1/{var}/otra/{var2}', function ($var, $var2){
-    return 'Hola mundo: '.$var. ' - '. $var2;
-});
-
-Route::get('users/{id?}', function ($id = "Juan Perez") {
-    return $id;
-});
-
-Route::get('users1/{name}', function ($name) {
-    return $name;
-})->where('name', '[A-Za-z]+');
-
-Route::get('calle/avenida/plaza', function () {
-    return 'Este es la calle:'; 
-})->name('lugar');
-
-Route::get('zona', function () {
-    return redirect()->route('lugar');
-});
-
-Route::get('calle2/avenida/plaza/{var}', function ($var) {
-    return 'Este es la calle:'; 
-})->name('lugar');
-
-Route::get('zona2', function () {
-    return redirect()->route('lugar', ['var' => 5]);
-});
-
-Route::middleware('auth')->group(function (){
-    Route::get('middleware1', function () {
-        return 1;
-    });
-    Route::get('middleware2', function () {
-        return 2;        
-    });
-});
-
-Route::get('voyager', 'VoyagerController@index');
-
-Route::get('viajar/{lugar}', 'VoyagerController@viajar');
-
-Route::get('desplazar/{desde}/{hasta}', 'VoyagerController@desplazar');
-
-Route::get('transportar/{vehiculo?}', 'VoyagerController@transportar');
-
-Route::get('valuations', 'ValuationsController');
-
-Route::get('redirigir/{nivel}', function ($nivel) {
-    return redirect()->route('nivel.cambiar', ['nivel' => $nivel]);
-});
-
-Route::get('viajar', 'VoyagerController@create');
-
-Route::get('viajar/{name}/edit', 'VoyagerController@edit');
-
-Route::get('visitar', 'VoyagerController@visitar');
-
-Route::get('recorrer', 'VoyagerController@recorrer');
-
-
+/**
+ * Rutas de Quality
+ */
 Route::resource('quality', 'QualityController');
 Route::patch('quality/{quality}/restore', 'QualityController@restore');
 Route::post('quality/{quality}/destroy', 'QualityController@forceDelete');
 
+/**
+ * Rutas de Attributes
+ */
 Route::resource('attribute', 'AttributeController');
 
+/**
+ * Rutas de Level
+ */
 Route::resource('level', 'LevelController');
 Route::get('level/search', 'LevelController@search');
-    
 
+/**
+ * Rutas de Utility
+ */
+Route::resource('utility', 'UtilityController');
+
+/**
+ * Rutas de Valuations
+ */
 Route::resource('valuations', 'ValuationsController');
 
+/**
+ * Rutas de Value
+ */
 Route::resource('value', 'ValueController');
 
-Route::get('author/{author}', function ($author) {
-    
-});
-
-Route::get('author', 'AuthorController@index');
-Route::get('author/{author}', 'AuthorController@show');
-Route::get('author/create', 'AuthorController@create');
-Route::post('author', 'AuthorController@store');
-Route::get('author/{author}/edit', 'AuthorController@edit');
-Route::put('author/{author}', 'AuthorController@update');
-Route::patch('author/{author}', 'AuthorController@update');
-Route::delete('author/{author}', 'AuthorController@delete');
-
-Route::get('bliblioteca/author/{author}', 'AuthorController@show');
+/**
+ * Rutas de voyagers
+ */
+Route::resource('voyager', 'VoyagerController');

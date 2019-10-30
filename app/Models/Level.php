@@ -11,4 +11,14 @@ class Level extends Model
     protected $fillable = [
         'positions'
     ];
+
+    public function attributes()
+    {
+        return $this->belongsToMany(
+            'App\Models\Attribute', 
+            'values', 
+            'level_id', 
+            'attribute_id'
+        );
+    }
 }

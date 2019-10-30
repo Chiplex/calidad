@@ -37,6 +37,7 @@
                         <tr>
                             <td>#</td>
                             <td>Posición</td>
+                            <td>Atributos</td>
                             <td>Creado en</td>
                             <td>Actualizado en</td>
                             <td>Opciones</td>
@@ -45,6 +46,7 @@
                         <tr>
                             <td>{{ $level->id }}</td>
                             <td>{{ $level->positions }}</td>
+<td>{{ $level->attributes }}</td>
                             <td>{{ $level->created_at }}</td>
                             <td>{{ $level->updated_at }}</td>
                             <td>

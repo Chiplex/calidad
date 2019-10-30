@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Voyager;
 use Illuminate\Http\Request;
 
 class VoyagerController extends Controller
 {
     public function index()
     {
-        $num1 = 25;
-        $num2 = 75;
-        $num3 = 135;
-
+        $voyagers = Voyager::all();
         
-        return view('voyager.index', compact('num1', 'num2', 'num3'));
+        return view('voyager.index', compact('voyagers'));
+    }
+
+    public function create()
+    {
+        return view('voyager.create');
+    }
+
+    public function store(Request $request)
+    {
+        Voyager::create($request->all());
+
+        return redirect()->route('voyager.index');
     }
 
     public function viajar($lugar)
@@ -37,19 +47,9 @@ class VoyagerController extends Controller
         return "Viajar mediante ". $vehiculo;
     }
 
-    public function create()
-    {
-        return view('voyager.create');
-    }
+    
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'username' => 'required',
-            'type' => 'required',
-            'linea' => 'required'
-        ]);
-    }
+    
 
     public function edit($name)
     {

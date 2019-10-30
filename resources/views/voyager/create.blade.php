@@ -3,8 +3,8 @@
 @section('page-header-title')
     @component('layouts.components.page-header-title')
         Viajeros
-        @slot('help') Agrega viajeros @endslot
-        @slot('icon') ik ik-square bg-blue @endslot
+        @slot('help') Listado de viajes realizados @endslot
+        @slot('icon') ik ik-map bg-blue @endslot
     @endcomponent
 @endsection
 
@@ -13,34 +13,49 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" method="post" action="/value">
+                <form class="forms-sample" method="post" action="/voyager">
                     @csrf
+                    @if ($errors->any())
+                    <div class="card-body">
+                        <div class="alert bg-danger alert-danger text-white" role="alert">
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
                     <div class="row">
                         <div class="col">
+                            <div class="form-group">
+                                <label for="username">Nombre de usuario</label>
+                                <input class="form-control" type="text" name="username">
+                            </div>
+                            @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                             <div class="form-radio">
-                                <h4 class="sub-title">Attributos</h4>
-                                @foreach ($attributes as $attribute)
-                                <div class="radio radiofill">
+                                <h4 class="sub-title">Tipo de viajero</h4>
+                                <div class="radio radiofill radio-inline">
                                     <label>
-                                        <input type="radio" name="attribute_id" value="{{ $attribute->id }}">
-                                        <i class="helper"></i>{{ $attribute->name }}
+                                        <input type="radio" name="type" value="chofer"> <i class="helper"></i>Chofer
                                     </label>
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-radio">
-                                <h4 class="sub-title">Niveles</h4>
-                                @foreach ($levels as $level)
-                                <div class="radio radiofill">
+                                <div class="radio radiofill radio-inline">
                                     <label>
-                                        <input type="radio" name="level_id"  value="{{ $level->id }}">
-                                        <i class="helper"></i>{{ $level->positions }}
+                                        <input type="radio" name="type" value="pasajero"> <i class="helper"></i>Pasajero
                                     </label>
                                 </div>
-                                @endforeach
                             </div>
+                            @error('type')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <div class="form-group">
+                                <label for="linea">Linea</label>
+                                <input class="form-control" type="text" name="linea">
+                            </div>
+                            @error('linea')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Guardar</button>

@@ -15,6 +15,7 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::all();
+        dd($levels->find(1));
         return view('level.index', compact('levels'));
     }
 

@@ -10,4 +10,21 @@ class Attribute extends Model
         'name',
         'description'
     ];
+
+    public function levels()
+    {
+        return $this->belongsToMany('App\Models\Level', 'values', 'attribute_id', 'level_id');
+    }
+
+    public function valuations()
+    {
+        return $this->hasManyThrough(
+            'App\Models\Valuation', 
+            'App\Models\Value',
+            'attribute_id',
+            'values_id',
+            'id',
+            'id'
+        );
+    }
 }
