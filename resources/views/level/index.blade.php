@@ -8,11 +8,6 @@
 @endsection
 
 @section('content')
-<form action="/level/search" method="post">
-    @csrf
-    <input type="search" name="search" id="">
-    <button type="submit">Buscar</button>
-</form>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -33,11 +28,10 @@
             @endif
             <div class="card-body p-0 table-border-style">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover table-bordered">
                         <tr>
                             <td>#</td>
                             <td>Posición</td>
-                            <td>Atributos</td>
                             <td>Creado en</td>
                             <td>Actualizado en</td>
                             <td>Opciones</td>
@@ -46,7 +40,6 @@
                         <tr>
                             <td>{{ $level->id }}</td>
                             <td>{{ $level->positions }}</td>
-<td>{{ $level->attributes }}</td>
                             <td>{{ $level->created_at }}</td>
                             <td>{{ $level->updated_at }}</td>
                             <td>

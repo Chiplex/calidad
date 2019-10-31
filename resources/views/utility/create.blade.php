@@ -35,6 +35,14 @@
                                     @endforeach
                                 </select>                                
                             </div>    
+                            <div class="form-group">
+                                <label for="ventaja">Ventaja</label>
+                                <input id="ventaja" class="form-control" type="text" name="ventaja">
+                            </div>
+                            <div class="form-group">
+                                <label for="desventaja">Desvantaja</label>
+                                <input id="desventaja" class="form-control" type="text" name="desventaja">
+                            </div>
                         </div>  
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Guardar</button>

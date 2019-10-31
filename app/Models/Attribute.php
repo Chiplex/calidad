@@ -20,11 +20,7 @@ class Attribute extends Model
     {
         return $this->hasManyThrough(
             'App\Models\Valuation', 
-            'App\Models\Value',
-            'attribute_id',
-            'values_id',
-            'id',
-            'id'
+            'App\Models\Value'
         );
     }
 }

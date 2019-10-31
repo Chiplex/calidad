@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attribute;
+use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 class AttributeController extends Controller
 {
@@ -15,7 +17,7 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $attributes = Attribute::all();
+        $attributes = Attribute::withCount('levels')->get();
         return view('attribute.index', compact('attributes'));
     }
 
@@ -92,5 +94,32 @@ class AttributeController extends Controller
         $attribute->delete();
 
         return back()->with('success', 'Elemento eliminado correctamente');
+    }
+
+    public function search(Request $request)
+    {
+        $attribute = Attribute::where('name', 'like', '%'.$request->search.'%')->get();
+        return view('attribute.search', compact('attribute'));
+    }
+
+    public function writeDown(Attribute $attribute)
+    {
+        $levels = Level::all();
+        return view('attribute.writeDown', compact('attribute', 'levels'));
+    }
+
+    public function insert(Request $request, Attribute $attribute)
+    {
+        $level = Level::firstOrCreate(['positions' => $request->input('positions')]);
+        $attribute->levels()->syncWithoutDetaching($level);
+
+        return redirect()->route('attribute.index')->with('success', 'Se registro correctamente');
+    }
+    
+    public function include(Request $request, Attribute $attribute)
+    {
+        $attribute->levels()->syncWithoutDetaching($request->input('level'));
+        
+        return redirect()->route('attribute.index')->with('success', 'Se registro correctamente');
     }
 }

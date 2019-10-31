@@ -26,12 +26,17 @@ Route::post('quality/{quality}/destroy', 'QualityController@forceDelete');
  * Rutas de Attributes
  */
 Route::resource('attribute', 'AttributeController');
+Route::get('attribute/writedown/{attribute}', 'AttributeController@writeDown');
+Route::post('attribute/insert/{attribute}', 'AttributeController@insert');
+Route::post('attribute/include/{attribute}', 'AttributeController@include');
+Route::post('attribute/search', 'AttributeController@search');
 
 /**
  * Rutas de Level
  */
 Route::resource('level', 'LevelController');
 Route::get('level/search', 'LevelController@search');
+Route::delete('level/drop/{level}/{attribute}', 'LevelController@drop');
 
 /**
  * Rutas de Utility
@@ -41,7 +46,7 @@ Route::resource('utility', 'UtilityController');
 /**
  * Rutas de Valuations
  */
-Route::resource('valuations', 'ValuationsController');
+Route::resource('valuation', 'ValuationsController');
 
 /**
  * Rutas de Value

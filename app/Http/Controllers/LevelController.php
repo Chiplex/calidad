@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Attribute;
 use App\Models\Level;
+use Illuminate\Http\Request;
 
 class LevelController extends Controller
 {
@@ -15,7 +16,6 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::all();
-        dd($levels->find(1));
         return view('level.index', compact('levels'));
     }
 
@@ -95,5 +95,12 @@ class LevelController extends Controller
     {
         $level->delete();
         return redirect()->route('level.index');
+    }
+
+    public function drop(Level $level, Attribute $attribute)
+    {
+        $attribute->levels()->detach($level);
+
+        return redirect()->route('attribute.index');
     }
 }

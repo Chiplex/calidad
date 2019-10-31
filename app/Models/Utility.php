@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Utility extends Model
 {
-    protected $fillable = ['voyager_id'];
+    protected $fillable = [
+        'voyager_id',
+        'ventaja',
+        'desventaja'
+    ];
 
     public function voyager()
     {

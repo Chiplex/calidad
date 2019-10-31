@@ -15,12 +15,8 @@ class Voyager extends Model
     /**
      * Get the utility record associated with the voyager.
      */
-    public function utility()
+    public function utilities()
     {
-        return $this->hasMany(
-            'App\Models\Utility', 
-            'voyager_id', 
-            'id'
-        );
+        return $this->hasMany('App\Models\Utility');
     }
 }

@@ -10,64 +10,74 @@
 
 @section('content')
 <div class="row">
+    <div class="col">
+        <form action="/attribute/search" method="post">
+            @csrf
+            <div class="form-group">
+                <input type="search" name="search" class="form-control">                
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+    @if ($message = Session::get('success'))
     <div class="col-md-12">
+        <div class="alert alert-primary" role="alert">
+            {{ $message }}
+        </div>
+    </div>
+    @endif
+
+    <div class="card-columns">
+        @foreach ($attributes as $attribute)
         <div class="card">
             <div class="card-header">
-                <h3>Atributos</h3>
+                <h3>{{ $attribute->name }}</h3>
                 <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><a href="attribute/create"><i class="ik ik-plus text-primary"></i></a></li>
-                    </ul>
+                    <form action="attribute/{{ $attribute->id }}" method="post" class="btn-group btn-group-sm">
+                        @method('DELETE')
+                        @csrf
+                        <a href="attribute/{{ $attribute->id }}/edit" class="btn btn-link"><i class="ik ik-edit text-green"></i></a>
+                        <button type="submit" class="btn btn-link" style="vertical-align: inherit"><i class="ik ik-trash-2 text-red"></i></button>
+                    </form>
                 </div>
             </div>
-            
-            @if ($message = Session::get('success'))
-            <div class="card-body">
-                <div class="alert alert-primary" role="alert">
-                    {{ $message }}
-                </div>
+            <div class="card-body mb-0">
+                Numero de niveles: {{ $attribute->levels_count }}
             </div>
-
-            @endif
-            <div class="card-body p-0 table-border-style">
-                <div class="table-responsive">
-                    <table class="table">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 table-bordered">
+                    <tbody>
+                        @foreach ($attribute->levels as $level)
                         <tr>
-                            <td>#</td>
-                            <td>Nombre</td>
-                            <td>Descripción</td>
-                            <td>Niveles</td>
-                            <td>Creado en</td>
-                            <td>Actualizado en</td>
-                            <td>Acciones</td>
-                        </tr>
-                        @foreach ($attributes as $attribute)
-                        <tr>
-                            <td>{{ $attribute->id }}</td>
-                            <td>{{ $attribute->name }}</td>
-                            <td>{{ $attribute->description }}</td>
-                            <td>{{ $attribute->valuations }}</td>
-                            <td>{{ $attribute->created_at }}</td>
-                            <td>{{ $attribute->updated_at }}</td>
-                            <td>
-                                <div class="table-actions">
-                                    <form action="attribute/{{ $attribute->id }}" method="post">
-                                        @method('DELETE')
-                                        @csrf
-                                        <a href="attribute/{{ $attribute->id }}"><i class="ik ik-eye text-blue"></i></a>
-                                        <a href="attribute/{{ $attribute->id }}/edit"><i class="ik ik-edit text-green"></i></a>
-                                        <button type="submit" class="btn btn-link btn-rounded" style="vertical-align: inherit"><i class="ik ik-trash-2 text-red"></i></button>
-                                    </form>
-                                </div>
+                            <td>{{ $level->positions }}</td>
+                            <td class="text-right">
+                                <form action="level/drop/{{ $level->id }}/{{ $attribute->id }}" method="post" class="btn-group btn-group-sm mb-5">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input type="hidden" name="level_id" value="">
+                                    <a href="level/{{ $level->id }}/edit" class="btn btn-link"><i class="ik ik-edit text-green"></i></a>
+                                    <button type="submit" class="btn btn-link"><i class="ik ik-trash-2 text-red"></i></button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-body">
+                <a href="attribute/writedown/{{ $attribute->id }}" class="btn btn-primary btn-block"><i class="ik ik-plus"></i> Nuevo Nivel</a>
+            </div>
+        </div>
+        @endforeach
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <a href="attribute/create" class="btn btn-primary btn-block"><i class="ik ik-plus"></i> Nuevo Atributo</a>
             </div>
         </div>
     </div>
-</div>
+
 @endsection
 
     

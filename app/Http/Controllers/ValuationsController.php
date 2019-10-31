@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Valuation;
 use Illuminate\Http\Request;
 
 class ValuationsController extends Controller
@@ -24,7 +25,9 @@ class ValuationsController extends Controller
      */
     public function index()
     {
-        return view('valuations.index');
+        $valuations = Valuation::with(['quality', 'value.attribute', 'value.level', 'utility'])->get();
+
+        return view('valuation.index', compact('valuations'));
     }
     
     /**

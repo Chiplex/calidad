@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Voyager;
+use App\Models\Utility;
 use Illuminate\Http\Request;
 
 class VoyagerController extends Controller
@@ -21,7 +22,9 @@ class VoyagerController extends Controller
 
     public function store(Request $request)
     {
-        Voyager::create($request->all());
+        $utility = Utility::create($request->all());
+        $viajero = Voyager::create($request->all());        
+        $viajero->utility()->save($utility);
 
         return redirect()->route('voyager.index');
     }
@@ -46,10 +49,6 @@ class VoyagerController extends Controller
     {
         return "Viajar mediante ". $vehiculo;
     }
-
-    
-
-    
 
     public function edit($name)
     {

@@ -38,7 +38,9 @@ class UtilityController extends Controller
      */
     public function store(Request $request)
     {
-        Utility::create($request->all());
+        $voyager = Voyager::find($request->voyager_id);
+        $utility = Utility::create($request->all());
+        $utility->voyager()->save($voyager);
         return redirect()->route('utility.index');
     }
 
