@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attribute;
 use App\Models\Level;
+use App\Models\Attribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LevelController extends Controller
 {
@@ -12,11 +13,15 @@ class LevelController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * $this->authorize('index', Level::class);
      */
     public function index()
     {
-        $levels = Level::all();
-        return view('level.index', compact('levels'));
+        if(Auth::user()->can('viewAny', Level::class)){
+            $levels = Level::all();
+            return view('level.index', compact('levels'));
+        }
+        \abort(401);
     }
 
     /**
@@ -26,6 +31,7 @@ class LevelController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Level::class);
         return view('level.create');
     }
 

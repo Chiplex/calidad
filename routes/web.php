@@ -10,10 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('layouts.admin');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 /**
  * Rutas de Quality
@@ -36,7 +33,10 @@ Route::post('attribute/search', 'AttributeController@search');
  */
 Route::resource('level', 'LevelController');
 Route::get('level/search', 'LevelController@search');
-Route::delete('level/drop/{level}/{attribute}', 'LevelController@drop');
+Route::delete(
+    'level/drop/{level}/{attribute}', 
+    'LevelController@drop'
+    )->middleware('can:drop,level');
 
 /**
  * Rutas de Utility
@@ -57,3 +57,10 @@ Route::resource('value', 'ValueController');
  * Rutas de voyagers
  */
 Route::resource('voyager', 'VoyagerController');
+
+/**
+ * Rutas de Autenticacion
+ */
+Auth::routes();
+
+

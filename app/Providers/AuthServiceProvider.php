@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Policies\LevelPolicy;
+use App\Models\Level;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        Level::class => LevelPolicy::class
     ];
 
     /**
@@ -25,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('store-attribute', function ($user){
+            return $user->isAdministrator();
+        });
     }
 }

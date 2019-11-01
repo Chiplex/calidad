@@ -48,7 +48,11 @@
                                         @method('delete')
                                         @csrf
                                         <a href="/level/{{ $level->id }}"><i class="ik ik-eye text-blue"></i></a>
-                                        <a href="/level/{{ $level->id }}/edit"><i class="ik ik-edit-2 text-green"></i></a>
+                                        @can('update', $level)
+                                        <a href="/level/{{ $level->id }}/edit">
+                                            <i class="ik ik-edit-2 text-green"></i>
+                                        </a>
+                                        @endcan
                                         <input type="hidden" name="level" value="{{ $level->id }}">
                                         <button type="submit" class="btn btn-link btn-rounded" style="vertical-align: inherit"><i class="ik ik-trash-2 text-red"></i></button>
                                     </form>

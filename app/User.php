@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isSuperAdministrator()
+    {
+        return $this->roles->contains('name', '=', 'Super-Administrator');
+    }
+
+    public function isAdministrator()
+    {
+        return $this->roles->contains('name', '=', 'Administrator');
+    }
+
+    public function isVoyager()
+    {
+        return $this->roles->contains('name', '=', 'Voyager');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'role_user');
+    }
 }

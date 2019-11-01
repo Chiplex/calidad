@@ -7,6 +7,7 @@ use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class AttributeController extends Controller
 {
@@ -28,7 +29,10 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        return view('attribute.create');
+        if (Gate::allows('store-attribute')) {
+            return view('attribute.create');
+        }
+        abort(401);
     }
 
     /**
