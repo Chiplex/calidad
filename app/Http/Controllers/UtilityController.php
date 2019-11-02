@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class UtilityController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->only('create');
+    }
     /**
      * Display a listing of the resource.
      *

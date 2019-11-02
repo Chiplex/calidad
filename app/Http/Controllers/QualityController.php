@@ -7,6 +7,11 @@ use App\Models\Quality;
 
 class QualityController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth')->except('search');
+    }
+    
     /**
      * Display a listing of the resource.
      *

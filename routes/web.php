@@ -15,15 +15,16 @@ Route::get('/', 'HomeController@index')->name('home');
 /**
  * Rutas de Quality
  */
-Route::resource('quality', 'QualityController');
+Route::resource('quality', 'QualityController')->middleware('auth');
 Route::patch('quality/{quality}/restore', 'QualityController@restore');
 Route::post('quality/{quality}/destroy', 'QualityController@forceDelete');
 
 /**
  * Rutas de Attributes
  */
-Route::resource('attribute', 'AttributeController');
-Route::get('attribute/writedown/{attribute}', 'AttributeController@writeDown');
+Route::resource('attribute', 'AttributeController')->middleware('auth');
+Route::get('attribute/writedown/{attribute}', 'AttributeController@writeDown')
+    ->middleware('can:writedown,attribute');
 Route::post('attribute/insert/{attribute}', 'AttributeController@insert');
 Route::post('attribute/include/{attribute}', 'AttributeController@include');
 Route::post('attribute/search', 'AttributeController@search');

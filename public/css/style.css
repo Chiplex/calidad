@@ -29,3 +29,15 @@
         column-count: 5;
     }
 }
+
+.card-grid-container {
+    display: grid;  
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-column-gap: 1em;
+}
+
+#foo {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}

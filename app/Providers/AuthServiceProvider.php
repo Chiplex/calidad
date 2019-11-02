@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Policies\LevelPolicy;
+use App\Policies\AttributePolicy;
 use App\Models\Level;
+use App\Models\Attribute;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-        Level::class => LevelPolicy::class
+        Level::class => LevelPolicy::class,
+        Attribute::class => AttributePolicy::class
     ];
 
     /**

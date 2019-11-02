@@ -8,12 +8,11 @@
                     <a href="/voyager" class="menu-item"><i class="ik ik-map"></i>Viajeros</a>
                     <a href="/utility" class="menu-item"><i class="ik ik-box"></i>Utilidades</a>                    
                     <a href="/valuation" class="menu-item"><i class="ik ik-check-square"></i>Valoraciones</a>                    
-                    <a href="/attribute" class="menu-item"><i class="ik ik-feather"></i>Attributos</a>
                 </div>
                 <div class="nav-lavel">Estructura</div>
                 <div class="nav-item">
-                        <a href="/quality" class="menu-item"><i class="ik ik-check"></i>Calidad</a>                    
-                    <a href="/value" class="menu-item"><i class="ik ik-square"></i>Valores</a>
+                    <a href="/quality" class="menu-item"><i class="ik ik-check"></i>Calidad</a>
+                    <a href="/attribute" class="menu-item"><i class="ik ik-feather"></i>Attributos</a>
                     <a href="/level" class="menu-item"><i class="ik ik-bar-chart"></i>Niveles</a>
                 </div>
             </nav>

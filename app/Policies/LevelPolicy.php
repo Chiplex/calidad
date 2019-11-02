@@ -30,7 +30,7 @@ class LevelPolicy
      */
     public function view(User $user, Level $level)
     {
-        return false;
+        return $user->isAdministrator();
     }
 
     /**

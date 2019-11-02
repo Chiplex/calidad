@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class LevelController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class LevelController extends Controller
     public function index()
     {
         if(Auth::user()->can('viewAny', Level::class)){
-            $levels = Level::all();
+            $levels = Level::paginate(9);
             return view('level.index', compact('levels'));
         }
         \abort(401);
@@ -64,6 +69,7 @@ class LevelController extends Controller
      */
     public function show(Level $level)
     {
+        $this->authorize('view', $level);
         return view('level.show', compact('level'));
     }
 

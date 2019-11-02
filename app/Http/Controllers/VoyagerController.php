@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class VoyagerController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth')->only('create');
+    }
+
     public function index()
     {
         $voyagers = Voyager::all();
