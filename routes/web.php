@@ -64,4 +64,7 @@ Route::resource('voyager', 'VoyagerController');
  */
 Auth::routes();
 
-
+/**
+ * Ruta de vue
+ */
+Route::get('vue', 'OtherController@vue');

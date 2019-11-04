@@ -12,12 +12,39 @@ class OtherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()
-            ->view('other.other')
-            ->header('Content-Type', 'text/plain');
-        return view();
+        if ($request->ajax()) {
+            return response()->json([
+                ['id' => 1, 'name' => 'objeto'],
+                ['id' => 2, 'name' => 'instumento'],
+                ['id' => 3, 'name' => 'artefacto']
+            ]);
+        }
+        return view('other.other');
     }
 
+    public function store(Request $request)
+    {
+        if ($request->ajax()) {
+            $level = new Level();
+            $level->positions = $request->input('positions');
+            $level->save();
+            return response()->json([
+                "message" => "Nivel creado correctamente"
+            ],200);
+        }
+    }
+
+    public function vue(Request $request)
+    {
+        if ($request->ajax()) {
+            return response()->json([
+                [ 'id' => 1, "name" => "Lucas"],
+                [ 'id' => 2, "name" => "Tito"],
+                [ 'id' => 3, "name" => "Fernando"]
+            ], 200);
+        }
+        return view('other.vue');
+    }
 }

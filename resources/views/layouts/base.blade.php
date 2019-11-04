@@ -7,9 +7,10 @@
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         
+        <!-- Styles -->
         <link rel="icon" href="{{ asset('favicon.ico" type="image/x-icon') }}" />
-
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
         
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -26,12 +27,18 @@
         <link rel="stylesheet" href="{{ asset('plugins/owl.carousel/dist/assets/owl.theme.default.min.css') }}">
         <link rel="stylesheet" href="{{ asset('dist/css/theme.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+        <!-- Scripts -->
         <script src="{{ asset('src/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
 
     <body>
-        @yield('body')
+        <div id="calidad">
+            @yield('body')
+        </div>
         @include('layouts.extras.modal')
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

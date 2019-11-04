@@ -17,9 +17,12 @@ class QualityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $qualitys = Quality::withTrashed()->get();
+        if ($request->ajax()) {
+            return response()->json($qualitys);
+        }
         return view('quality.index', compact('qualitys'));
     }
 

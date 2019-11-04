@@ -18,20 +18,6 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        if ($request->isAjax()) {
-            
-        }
-        $b = Attribute::with('levels')->get();
-        dd($b);
-        $a = collect(['a', ['z','w'], 'a', 'c', ['r','g']]);
-        return $a->flatten();
-        dump($a->contains(function ($value, $key){
-            return $value > 5;
-        }));
-
-        return(Attribute::all()->chunk(3));
-        dd(Attribute::all()->chunk(3));
-
         $attributes = Attribute::withCount('levels')->paginate(2);
         return view('attribute.index', compact('attributes'));
     }
