@@ -1838,6 +1838,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Event__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Event */ "./resources/js/Event.js");
 //
 //
 //
@@ -1858,19 +1859,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      foos: [],
+      levels: [],
       loading: true
     };
   },
-  mounted: function mounted() {
+  methods: {
+    deleteLevel: function deleteLevel(level) {
+      axios["delete"]('http://127.0.0.1:8000/level/' + this.level).then(function (res) {
+        console.log(res);
+      });
+    }
+  },
+  created: function created() {
     var _this = this;
 
-    axios.get('http://127.0.0.1:8000/vue').then(function (res) {
-      _this.foos = res.data;
-      _this.loading = false;
+    _Event__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$on('level-added', function (data) {
+      _this.levels.push(data);
+
+      _this.levels.sort();
+    });
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('http://127.0.0.1:8000/level').then(function (res) {
+      console.log(res);
+      _this2.levels = res.data;
+      _this2.loading = false;
+    })["catch"](function (error) {
+      console.log(error);
     });
   }
 });
@@ -1941,6 +1971,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -1954,6 +1993,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Event__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Event */ "./resources/js/Event.js");
 //
 //
 //
@@ -1980,7 +2020,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      positions: null
+    };
+  },
+  methods: {
+    createLevel: function createLevel() {
+      console.log('enviando ' + this.positions);
+      axios.post('http://127.0.0.1:8000/level', {
+        positions: this.positions
+      }).then(function (res) {
+        console.log('recibido: ' + res.data);
+        _Event__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$emit('level-added', res.data.level);
+      })["catch"](function (err) {
+        console.log('error: ' + err);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -37986,50 +38047,106 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    [
-      _c("spinner-component", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.foos, function(foo) {
-        return _c("div", { staticClass: "col-md-4" }, [
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "row" },
+      [
+        _c("spinner-component", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ]
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.levels, function(level) {
+        return _c("div", { staticClass: "col-md-2" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("\r\n                Elementos\r\n            ")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("h5", { staticClass: "card-title" }, [_vm._v("Title")]),
+            _c("div", { staticClass: "card-body mr-0" }, [
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(level.positions))
+              ]),
               _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(foo.name))])
-            ]),
-            _vm._v(" "),
-            _vm._m(0, true)
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteLevel(level.id)
+                    }
+                  }
+                },
+                [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { type: "hidden", name: "level" },
+                    domProps: { value: level.id }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(2, true)
+                ]
+              )
+            ])
           ])
         ])
-      })
-    ],
-    2
-  )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [_c("addlevelbotton-component")],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c("p", { staticClass: "text-danger" }, [_vm._v("Eliminar")])
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "ik ik-eye text-blue" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "ik ik-edit-2 text-green" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-link btn-rounded",
+        staticStyle: { "vertical-align": "inherit" },
+        attrs: { type: "submit" }
+      },
+      [_c("i", { staticClass: "ik ik-trash-2 text-red" })]
+    )
   }
 ]
 render._withStripped = true
@@ -38105,20 +38222,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    {
-      staticClass: "btn btn-primary",
-      attrs: {
-        type: "button",
-        "data-toggle": "modal",
-        "data-target": "#addlevel"
-      }
-    },
-    [_vm._v("Nuevo Nivel")]
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card text-white bg-primary " }, [
+      _c("div", { staticClass: "card-body d-flex align-items-center" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#addlevel"
+            }
+          },
+          [_vm._v("\n            Nuevo Nivel\n        ")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38161,15 +38289,17 @@ var render = function() {
             _c(
               "form",
               {
-                attrs: {
-                  action: "/level/add",
-                  method: "post",
-                  id: "form_add_level"
+                attrs: { id: "formlevel" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.createLevel($event)
+                  }
                 }
               },
               [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "pisitions" } }, [
+                  _c("label", { attrs: { for: "positions" } }, [
                     _vm._v("Posición")
                   ]),
                   _vm._v(" "),
@@ -38183,7 +38313,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { id: "pisitions", type: "text", name: "" },
+                    attrs: { id: "positions", type: "text" },
                     domProps: { value: _vm.positions },
                     on: {
                       input: function($event) {
@@ -38236,7 +38366,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-primary",
-          attrs: { type: "button", form: "form_add_level" }
+          attrs: { type: "submit", form: "formlevel" }
         },
         [_vm._v("Agregar")]
       )
@@ -50430,6 +50560,23 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+
+/***/ "./resources/js/Event.js":
+/*!*******************************!*\
+  !*** ./resources/js/Event.js ***!
+  \*******************************/
+/*! exports provided: EventBus */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 
 /***/ }),
 

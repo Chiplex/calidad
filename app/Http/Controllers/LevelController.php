@@ -20,10 +20,15 @@ class LevelController extends Controller
      * @return \Illuminate\Http\Response
      * $this->authorize('index', Level::class);
      */
-    public function index()
+    public function index(Request $request)
     {
         if(Auth::user()->can('viewAny', Level::class)){
-            $levels = Level::paginate(9);
+            $levels = Level::orderBy('positions','asc')->get();
+
+            if ($request->ajax()) {
+                return response()->json($levels, 200);
+            }
+        
             return view('level.index', compact('levels'));
         }
         \abort(401);
@@ -57,6 +62,13 @@ class LevelController extends Controller
         $level = new Level;
         $level->positions = $request->positions;
         $level->save();
+
+        if($request->ajax()){
+            return response()->json([
+                'message' => 'Guardado exitoso',
+                'level' => $level
+            ], 200);
+        }
 
         return redirect()->route('level.index');
     }

@@ -67,4 +67,5 @@ Auth::routes();
 /**
  * Ruta de vue
  */
-Route::get('vue', 'OtherController@vue');
+Route::get('vue', 'OtherController@index');
+Route::get('vue2', 'OtherController@vue');
